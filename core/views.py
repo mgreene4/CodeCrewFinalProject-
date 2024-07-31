@@ -53,13 +53,25 @@ def chart(request):
         title= 'Age of Students in 2015',
     )
 
+    student_behavior = pd.read_csv('core/data/filtered descriptive analysis(Sheet1).csv')
+
+    student_behavior = student_behavior[~student_behavior.index.isin([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23])]
+
+    fig5 = px.bar(
+        student_behavior,
+        x= 'Questions',
+        y= '2015',
+        title= 'Student Behaviors in 2015'
+    )
+
     #convert graph to an html object
     chart = fig.to_html()
     chart2 = fig2.to_html()
     chart3 = fig3.to_html()
     chart4 = fig4.to_html()
+    chart5 = fig5.to_html()
 
     #send html object to the url page
-    context = {'chart': chart, 'chart2': chart2, 'chart3': chart3, 'chart4': chart4}
+    context = {'chart': chart, 'chart2': chart2, 'chart3': chart3, 'chart4': chart4, 'chart5': chart5}
 
     return render(request, 'core/chart.html', context)
